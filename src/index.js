@@ -1,0 +1,1 @@
+export miradorEuropeanaFulltextAnnotationPlugin from './plugins/miradorEuropeanaFulltextAnnotationPlugin';

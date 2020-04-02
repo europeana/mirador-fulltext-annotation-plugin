@@ -1,0 +1,27 @@
+{
+  "name": "mirador-fulltext-annotation-plugin",
+  "version": "0.0.1",
+  "description": "Mirador 3 Europeana fulltext annotation plugin",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "nwb build-react-component",
+    "start": "nwb serve-react-demo",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "EUPL-1.2",
+  "devDependencies": {
+    "mirador": "^3.0.0-beta.6",
+    "nwb": "^0.24.5",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3"
+  },
+  "peerDependencies": {
+    "mirador": "^3.0.0-beta.6",
+    "react": "16.x",
+    "react-dom": "16.x"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15"
+  }
+}
