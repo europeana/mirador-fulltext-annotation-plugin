@@ -12,14 +12,14 @@ const config = {
     allowFullscreen: true,
     allowMaximize: false,
     allowTopMenuButton: false,
-    allowWindowSideBar: false,
+    // allowWindowSideBar: false,
     panels: {
       info: false,
       attribution: false,
       canvas: true,
       // Disabled due to performance issues with many annotations, pending
       // https://github.com/ProjectMirador/mirador/issues/2915
-      annotations: false,
+      // annotations: false,
       search: false
     }
   },
