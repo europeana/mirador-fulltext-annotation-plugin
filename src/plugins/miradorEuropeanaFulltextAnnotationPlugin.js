@@ -5,26 +5,58 @@ import isEqual from 'lodash/isEqual';
 class MiradorEuropeanaFulltextAnnotation extends Component {
   constructor(props) {
     super(props);
-    this.fetchAnnotations = this.fetchAnnotations.bind(this);
+    this.fetchManifest = this.fetchManifest.bind(this);
+    this.getAnnoPageURIs = this.getAnnoPageURIs.bind(this);
   }
 
-  fetchAnnotations(canvases) {
-    console.log('MiradorEuropeanaFulltextAnnotation fetchAnnotations');
+  getAnnoPageURIs(sequences) {
+    const annoPageURIs = []
+    sequences.forEach((seq) => {
+      seq.canvases.forEach((canvas) => {
+        canvas.otherContent.forEach(oc => {
+          annoPageURIs.push(oc)
+        })
+      })
+    })
+
+    return annoPageURIs
   }
 
-  componentDidMount() {
-    const { canvases } = this.props;
-    this.fetchAnnotations(canvases);
-  }
+  async fetchManifest(manifestId) {
+    if (manifestId) {
+      try {
+        const fetchData = await fetch(manifestId, {
+          method: 'GET',
+        })
 
-  componentDidUpdate(prevProps) {
-    const { canvases } = this.props;
-    const currentCanvasIds = canvases.map(canvas => canvas.id);
-    const prevCanvasIds = (prevProps.canvases || []).map(canvas => canvas.id);
-    if (!isEqual(currentCanvasIds, prevCanvasIds)) {
-      this.fetchAnnotations(canvases);
+        const response = await fetchData.json()
+        return response
+      } catch (err) {
+        console.log(err)
+      }
     }
   }
+
+  async componentDidMount() {
+    const { targetProps } = this.props
+    const { manifestId } = targetProps;
+    const manifestResponse = await this.fetchManifest(manifestId);
+
+    const monkey = this.getAnnoPageURIs(manifestResponse.sequences)
+
+    console.log('fetch', monkey)
+
+    
+  }
+
+  // componentDidUpdate(prevProps) {
+  //   const { canvases } = this.props;
+  //   const currentCanvasIds = canvases.map(canvas => canvas.id);
+  //   const prevCanvasIds = (prevProps.canvases || []).map(canvas => canvas.id);
+  //   if (!isEqual(currentCanvasIds, prevCanvasIds)) {
+  //     this.fetchAnnotations(canvases);
+  //   }
+  // }
 
   render() {
     const { TargetComponent } = this.props;
