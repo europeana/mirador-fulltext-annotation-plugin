@@ -1,11 +1,11 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment } from 'react'
 import mirador from 'mirador';
 import isEqual from 'lodash/isEqual';
 
-class MiradorEuropeanaFulltextAnnotation extends Component {
+class MiradorAnnototEndpoint extends Component {
   constructor(props) {
     super(props);
-    this.fetchManifest = this.fetchManifest.bind(this);
+    this.fetchHandler = this.fetchHandler.bind(this);
     this.getAnnoPageURIs = this.getAnnoPageURIs.bind(this);
   }
 
@@ -22,41 +22,33 @@ class MiradorEuropeanaFulltextAnnotation extends Component {
     return annoPageURIs
   }
 
-  async fetchManifest(manifestId) {
-    if (manifestId) {
-      try {
-        const fetchData = await fetch(manifestId, {
-          method: 'GET',
-        })
+  async fetchHandler(URI) {
+    if (URI) {
+      const fetchData = await fetch(URI, {
+        method: 'GET',
+      })
 
-        const response = await fetchData.json()
-        return response
-      } catch (err) {
-        console.log(err)
-      }
+      const response = await fetchData.json()
+      return response
     }
   }
 
-  async componentDidMount() {
-    const { targetProps } = this.props
-    const { manifestId } = targetProps;
-    const manifestResponse = await this.fetchManifest(manifestId);
+  componentDidMount() {
+    const { canvases, fetchAnnotation } = this.props;
+    canvases.forEach(async canvas => {
+      if (canvas) {
+        const manifestId = canvas.options.resource.id
+        const manifestResponse = await this.fetchHandler(manifestId);
+        const annonPageResponse = this.getAnnoPageURIs(manifestResponse.sequences)
+        const resourcesResponse = await this.fetchHandler(annonPageResponse[0]);
+        const fullTextId = resourcesResponse.resources[0].resource['@id']
+        const fullText = await this.fetchHandler(fullTextId)
 
-    const monkey = this.getAnnoPageURIs(manifestResponse.sequences)
-
-    console.log('fetch', monkey)
-
-    
+        console.log(resourcesResponse.resources[0])
+        
+      }
+    });
   }
-
-  // componentDidUpdate(prevProps) {
-  //   const { canvases } = this.props;
-  //   const currentCanvasIds = canvases.map(canvas => canvas.id);
-  //   const prevCanvasIds = (prevProps.canvases || []).map(canvas => canvas.id);
-  //   if (!isEqual(currentCanvasIds, prevCanvasIds)) {
-  //     this.fetchAnnotations(canvases);
-  //   }
-  // }
 
   render() {
     const { TargetComponent } = this.props;
@@ -77,9 +69,9 @@ const mapDispatchToProps = {
 };
 
 export default {
-  target: 'Window',
+  target: 'WindowCanvasNavigationControls',
   mode: 'wrap',
-  component: MiradorEuropeanaFulltextAnnotation,
+  component: MiradorAnnototEndpoint,
   mapStateToProps: mapStateToProps,
   mapDispatchToProps: mapDispatchToProps,
 }
