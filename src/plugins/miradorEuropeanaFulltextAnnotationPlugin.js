@@ -20,24 +20,14 @@ class MiradorEuropeanaFulltextAnnotation extends Component {
           annotations: res.resources
         })
         let fullTextData = JSON.stringify(this.state.annotations[1].resource).split('@id":"')[1].split('char=')[0]
-        // let firstAnnotationText = JSON.stringify(this.state.annotations[1].resource).split('char=')[1].substr(0,3)
-        let secondAnnotationText = JSON.stringify(this.state.annotations[2].resource).split('char=')[1].substr(0,3)
-
-        // let textStart = parseInt(firstAnnotationText.split(',')[0])
-        // let textEnd = parseInt(firstAnnotationText.split(',')[1])
-        // let firstAnnotationShape = this.state.annotations[1].on.toString().split('xywh=')[1]
-        // let x = parseInt(firstAnnotationShape.split(',')[0])
-        // let y = parseInt(firstAnnotationShape.split(',')[1])
-        // let w = parseInt(firstAnnotationShape.split(',')[2]) / 2
-        // let h = parseInt(firstAnnotationShape.split(',')[3]) / 2
-
-        let textStart = parseInt(secondAnnotationText.split(',')[0])
-        let textEnd = parseInt(secondAnnotationText.split(',')[1])
-        let secondAnnotationShape = this.state.annotations[2].on.toString().split('xywh=')[1]
-        let x = parseInt(secondAnnotationShape.split(',')[0])
-        let y = parseInt(secondAnnotationShape.split(',')[1])
-        let w = parseInt(secondAnnotationShape.split(',')[2])
-        let h = parseInt(secondAnnotationShape.split(',')[3]) / 2
+        let firstAnnotationText = JSON.stringify(this.state.annotations[1].resource).split('char=')[1].substr(0,3)
+        let textStart = parseInt(firstAnnotationText.split(',')[0])
+        let textEnd = parseInt(firstAnnotationText.split(',')[1])
+        let firstAnnotationShape = this.state.annotations[1].on.toString().split('xywh=')[1]
+        let x = parseInt(firstAnnotationShape.split(',')[0])
+        let y = parseInt(firstAnnotationShape.split(',')[1])
+        let w = parseInt(firstAnnotationShape.split(',')[2]) / 2
+        let h = parseInt(firstAnnotationShape.split(',')[3]) / 2
 
         const node = ReactDOM.findDOMNode(this);
         let canvasWidth = node.getBoundingClientRect().width
