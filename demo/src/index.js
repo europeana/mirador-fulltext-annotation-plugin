@@ -5,21 +5,23 @@ import { miradorEuropeanaFulltextAnnotationPlugin } from '../../src';
 const config = {
   id: 'demo',
   windows: [{
-    loadedManifest: 'https://iiif.europeana.eu/presentation/9200301/BibliographicResource_3000126341277/manifest'
+    loadedManifest: 'https://iiif.europeana.eu/presentation/9200396/BibliographicResource_3000118436341/manifest'
   }],
   window: {
     allowClose: false,
     allowFullscreen: true,
     allowMaximize: false,
     allowTopMenuButton: false,
-    // allowWindowSideBar: false,
+    sideBarOpenByDefault: true,
+    defaultSideBarPanel: 'annotations',
+    allowWindowSideBar: false,
     panels: {
       info: false,
       attribution: false,
       canvas: true,
       // Disabled due to performance issues with many annotations, pending
       // https://github.com/ProjectMirador/mirador/issues/2915
-      // annotations: false,
+      annotations: true,
       search: false
     }
   },
