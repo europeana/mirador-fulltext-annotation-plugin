@@ -12,16 +12,16 @@ const config = {
     allowFullscreen: true,
     allowMaximize: false,
     allowTopMenuButton: false,
-    sideBarOpenByDefault: true,
-    defaultSideBarPanel: 'annotations',
-    allowWindowSideBar: false,
+    // sideBarOpenByDefault: true,
+    // defaultSideBarPanel: 'annotations',
+    // allowWindowSideBar: false,
     panels: {
       info: false,
       attribution: false,
       canvas: true,
       // Disabled due to performance issues with many annotations, pending
       // https://github.com/ProjectMirador/mirador/issues/2915
-      annotations: true,
+      // annotations: true,
       search: false
     }
   },
